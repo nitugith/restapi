@@ -14,6 +14,9 @@ function handleFormSubmit(event){
     .catch((err)=>{
         console.log(err)
     })
+    document.getElementById("username").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("phone").value = "";
     
   // localStorage.setItem(userDetails,JSON.stringify(userDetails));
    displayUserOnScreen(userDetails);
