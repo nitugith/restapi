@@ -22,6 +22,20 @@ function handleFormSubmit(event){
    displayUserOnScreen(userDetails);
 }
 
+   window.addEventListener("contentload",()=>{
+        axios.get("https://crudcrud.com/api/75f7e0aba83142d5b267e1d39db432d3/userdetails")
+        .then((res)=>{
+          console.log(res)
+
+          for(var i=0;i<res.data.length;i++){
+            displayUserOnScreen(res.data[i])
+          }
+        })
+        .catch((err)=>{
+              console.log(err)
+        })
+      
+   })
 function displayUserOnScreen(userDetails) {
     const userItem = document.createElement("li");
     userItem.appendChild(
