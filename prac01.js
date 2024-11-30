@@ -23,7 +23,7 @@ function handleFormSubmit(event){
 }
 
    window.addEventListener("contentload",()=>{
-        axios.get("https://crudcrud.com/api/75f7e0aba83142d5b267e1d39db432d3/userdetails")
+        axios.get("https://crudcrud.com/api/a5caff24dd4045e790f5f4738b900dec/userdetails")
         .then((res)=>{
           console.log(res)
 
