@@ -1,13 +1,13 @@
 function handleFormSubmit(event){
     event.preventDefault();
-    const userDetails = {
+    const userdetails = {
         username: event.target.username.value ,
         email: event.target.email.value ,
         phone: event.target.phone.value,
     };
    
 
-    axios.post("https://crudcrud.com/api/a5caff24dd4045e790f5f4738b900dec/userdetails",userDetails)
+    axios.post("https://crudcrud.com/api/9bcfdb9188b94e45ac2c29ffc5890d13/userdetails",userdetails)
     .then((res)=>{
         console.log(res)
     })
@@ -19,11 +19,11 @@ function handleFormSubmit(event){
       document.getElementById("phone").value = "";
     
   // localStorage.setItem(userDetails,JSON.stringify(userDetails));
-   displayUserOnScreen(userDetails);
+   displayUserOnScreen(userdetails);
 }
 
-   window.addEventListener("contentload",()=>{
-        axios.get("https://crudcrud.com/api/a5caff24dd4045e790f5f4738b900dec/userdetails")
+   window.addEventListener("DOMContentLoaded",()=>{
+        axios.get("https://crudcrud.com/api/9bcfdb9188b94e45ac2c29ffc5890d13/userdetails")
         .then((res)=>{
           console.log(res)
 
@@ -36,12 +36,11 @@ function handleFormSubmit(event){
         })
       
    })
-function displayUserOnScreen(userDetails) {
+function displayUserOnScreen(userdetails) {
     const userItem = document.createElement("li");
     userItem.appendChild(
       document.createTextNode(
-        `${userDetails.username} - ${userDetails.email} - ${userDetails.phone}`
-      )
+        `${userdetails.username} - ${userdetails.email} - ${userdetails.phone} `)
     );
   
     const deleteBtn = document.createElement("button");
@@ -56,15 +55,40 @@ function displayUserOnScreen(userDetails) {
     userList.appendChild(userItem);
   
     deleteBtn.addEventListener("click", function (event) {
-      userList.removeChild(event.target.parentElement);
-      localStorage.removeItem(userDetails.email);
+     axios.delete(`https://crudcrud.com/api/9bcfdb9188b94e45ac2c29ffc5890d13/userdetails/${userdetails._id}`)
+        .then((res)=>{
+         console.log(res)
+         userList.removeChild(event.target.parentElement);
+        })
+        .catch((err)=>{
+          console.log(err)
+       })
+      
+     // localStorage.removeItem(userDetails.email);
     });
   
     editBtn.addEventListener("click", function (event) {
-      userList.removeChild(event.target.parentElement);
-      localStorage.removeItem(userDetails.email);
-      document.getElementById("username").value = userDetails.username;
-      document.getElementById("email").value = userDetails.email;
-      document.getElementById("phone").value = userDetails.phone;
+      document.getElementById("username").value = userdetails.username;
+        document.getElementById("email").value= userdetails.email;
+        document.getElementById("phone").value= userdetails.phone; 
+
+
+      axios.put(`https://crudcrud.com/api/9bcfdb9188b94e45ac2c29ffc5890d13/userdetails/${userdetails._id}`,
+        {
+         username:`${userdetails.username}`,
+         email:`${userdetails.email}`,
+         phone:`${userdetails.phone}`
+        }
+      )
+      .then((res)=>{
+        console.log(res)
+        userList.removeChild(event.target.parentElement); 
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+      
+      //localStorage.removeItem(userdetails.email);
+      
     });
   }
